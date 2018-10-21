@@ -1,3 +1,12 @@
+# Flowpack.RestrictCreation
+
+Imagine the situation: you have a website with 'English (US)', 'English (UK)' and 'German' content dimensions present.
+
+Now you never want editors to create new nodes directly in 'English (UK)', without first creating them in 'English (US)' and almost never in 'German', but some really rare cases.
+
+This package provides an option to enforce these kind of constraints:
+
+![restrictcreation](https://user-images.githubusercontent.com/837032/47265437-80bfcc80-d530-11e8-8e86-d469e2fb7ba7.gif)
 
 Getting started:
 
