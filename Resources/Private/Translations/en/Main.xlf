@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file original="" product-name="Flowpack.RestrictCreation" source-language="en" datatype="plaintext">
+		<body>
+			<trans-unit id="bodyText1--warn" xml:space="preserve">
+				<source>
+					Are you sure you want to create a new node in content dimension '{currentPresetLabel}'?
+				</source>
+			</trans-unit>
+			<trans-unit id="bodyText2--warn" xml:space="preserve">
+				<source>
+					It is recommended to create new nodes in dimension '{originPresetLabel}' instead.
+				</source>
+			</trans-unit>
+			<trans-unit id="bodyText1--disallow" xml:space="preserve">
+				<source>
+					Creating new nodes in dimension '{currentPresetLabel}' is not allowed.
+				</source>
+			</trans-unit>
+			<trans-unit id="bodyText2--disallow" xml:space="preserve">
+				<source>
+					Please switch to the dimension '{originPresetLabel}' and create the new node there.
+				</source>
+			</trans-unit>
+			<trans-unit id="switchTo" xml:space="preserve">
+				<source>
+					Switch to '{originPresetLabel}'
+				</source>
+			</trans-unit>
+			<trans-unit id="continue" xml:space="preserve">
+				<source>
+					Continue anyway
+				</source>
+			</trans-unit>
+			<trans-unit id="title" xml:space="preserve">
+				<source>
+					Wrong dimension?
+				</source>
+			</trans-unit>
+			<br/>
+		</body>
+	</file>
+</xliff>
