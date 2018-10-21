@@ -41,10 +41,12 @@ Neos:
             restrictCreation:
               mode: warn
               originPreset: en_US
+              documentNodesOnly: true
 ```
 
 `mode: warn` would only give a warning about creating a node in a possible wrong dimensiong.
 `mode: disallow` would completely forbid creating new nodes in a certain dimension.
+`documentNodesOnly: true` would trigger the warning only for document nodes: you would be able to create content nodes as usual, but creating document nodes in that dimension would be blocked/warned.
 
 ## Acknowledgments
 

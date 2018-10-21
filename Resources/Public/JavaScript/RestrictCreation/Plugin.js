@@ -757,7 +757,7 @@ function addNode(_ref) {
                     nodeTypesRegistry = globalRegistry.get('@neos-project/neos-ui-contentrepository');
                     _context2.next = 3;
                     return (0, _effects.takeLatest)(_neosUiReduxStore.actionTypes.CR.Nodes.COMMENCE_CREATION, /*#__PURE__*/regeneratorRuntime.mark(function _callee(action) {
-                        var _action$payload, referenceNodeContextPath, referenceNodeFusionPath, state, restrictCreationPreset, restrictCreationMode, context, waitForNextAction, nextAction;
+                        var _action$payload, referenceNodeContextPath, referenceNodeFusionPath, state, restrictCreationPreset, showRestrictCreationDialog, documentNodesOnly, getNodeByContextPathSelector, referenceNode, isDocument, context, waitForNextAction, nextAction;
 
                         return regeneratorRuntime.wrap(function _callee$(_context) {
                             while (1) {
@@ -770,53 +770,75 @@ function addNode(_ref) {
                                     case 3:
                                         state = _context.sent;
                                         restrictCreationPreset = _redux.selectors.restrictCreationSelector(state);
-                                        restrictCreationMode = (0, _plowJs.$get)('restrictCreation.mode', restrictCreationPreset);
+
+                                        // Show restrict creation dialog if mode is not null
+
+                                        showRestrictCreationDialog = Boolean((0, _plowJs.$get)('restrictCreation.mode', restrictCreationPreset));
+                                        documentNodesOnly = (0, _plowJs.$get)('restrictCreation.documentNodesOnly', restrictCreationPreset);
+
+                                        if (!documentNodesOnly) {
+                                            _context.next = 14;
+                                            break;
+                                        }
+
+                                        getNodeByContextPathSelector = _neosUiReduxStore.selectors.CR.Nodes.makeGetNodeByContextPathSelector(referenceNodeContextPath);
+                                        _context.next = 11;
+                                        return (0, _effects.select)(getNodeByContextPathSelector);
+
+                                    case 11:
+                                        referenceNode = _context.sent;
+                                        isDocument = nodeTypesRegistry.hasRole((0, _plowJs.$get)('nodeType', referenceNode), 'document');
+                                        // Skip the dialog if not document node
+
+                                        showRestrictCreationDialog = isDocument;
+
+                                    case 14:
                                         context = {
                                             nodeTypesRegistry: nodeTypesRegistry,
                                             referenceNodeContextPath: referenceNodeContextPath,
                                             referenceNodeFusionPath: referenceNodeFusionPath
                                         };
 
-                                        if (!restrictCreationMode) {
-                                            _context.next = 22;
+                                        if (!showRestrictCreationDialog) {
+                                            _context.next = 30;
                                             break;
                                         }
 
-                                        _context.next = 10;
+                                        _context.next = 18;
                                         return (0, _effects.put)(_redux.actions.openDialog());
 
-                                    case 10:
-                                        _context.next = 12;
+                                    case 18:
+                                        _context.next = 20;
                                         return (0, _effects.race)([(0, _effects.take)(_redux.actionTypes.OPEN_DIALOG), (0, _effects.take)(_redux.actionTypes.CLOSE_DIALOG), (0, _effects.take)(_redux.actionTypes.CONTINUE_CREATION)]);
 
-                                    case 12:
+                                    case 20:
                                         waitForNextAction = _context.sent;
                                         nextAction = Object.values(waitForNextAction)[0];
 
                                         if (!(nextAction.type === _redux.actionTypes.CONTINUE_CREATION)) {
-                                            _context.next = 19;
+                                            _context.next = 27;
                                             break;
                                         }
 
-                                        _context.next = 17;
+                                        _context.next = 25;
                                         return (0, _effects.call)(_neosUiSagas.crNodeOperations.addNode.nodeCreationWorkflow, context);
 
-                                    case 17:
-                                        _context.next = 20;
+                                    case 25:
+                                        _context.next = 28;
                                         break;
 
-                                    case 19:
+                                    case 27:
                                         return _context.abrupt('return');
 
-                                    case 20:
-                                        _context.next = 24;
+                                    case 28:
+                                        _context.next = 32;
                                         break;
 
-                                    case 22:
-                                        _context.next = 24;
+                                    case 30:
+                                        _context.next = 32;
                                         return (0, _effects.call)(_neosUiSagas.crNodeOperations.addNode.nodeCreationWorkflow, context);
 
-                                    case 24:
+                                    case 32:
                                     case 'end':
                                         return _context.stop();
                                 }

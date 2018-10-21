@@ -1,6 +1,6 @@
 import {takeLatest, take, select, call, put, race} from 'redux-saga/effects';
 import {$get} from 'plow-js';
-import {actionTypes} from '@neos-project/neos-ui-redux-store';
+import {actionTypes, selectors} from '@neos-project/neos-ui-redux-store';
 import {actions as localActions, actionTypes as localActionTypes, selectors as localSelectors} from './redux';
 import {crNodeOperations} from '@neos-project/neos-ui-sagas';
 
@@ -12,14 +12,25 @@ export function * addNode({globalRegistry}) {
 
         const state = yield select();
         const restrictCreationPreset = localSelectors.restrictCreationSelector(state);
-        const restrictCreationMode = $get('restrictCreation.mode', restrictCreationPreset);
+
+        // Show restrict creation dialog if mode is not null
+        let showRestrictCreationDialog = Boolean($get('restrictCreation.mode', restrictCreationPreset));
+        const documentNodesOnly = $get('restrictCreation.documentNodesOnly', restrictCreationPreset);
+
+        if (documentNodesOnly) {
+            const getNodeByContextPathSelector = selectors.CR.Nodes.makeGetNodeByContextPathSelector(referenceNodeContextPath);
+            const referenceNode = yield select(getNodeByContextPathSelector);
+            const isDocument = nodeTypesRegistry.hasRole($get('nodeType', referenceNode), 'document');
+            // Skip the dialog if not document node
+            showRestrictCreationDialog = isDocument;
+        }
 
         const context = {
             nodeTypesRegistry,
             referenceNodeContextPath,
             referenceNodeFusionPath
         };
-        if (restrictCreationMode) {
+        if (showRestrictCreationDialog) {
             yield put(localActions.openDialog());
             const waitForNextAction = yield race([
                 take(localActionTypes.OPEN_DIALOG),
