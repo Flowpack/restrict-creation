@@ -2,6 +2,7 @@
     "description": "Restrict creation of nodes in certain content dimensions",
     "type": "neos-package",
     "name": "flowpack/restrictcreation",
+    "license": "MIT",
     "require": {
         "neos/neos": "^3.0|^4.0"
     },

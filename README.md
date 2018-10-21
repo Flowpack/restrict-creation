@@ -8,7 +8,7 @@ This package provides an option to enforce these kind of constraints:
 
 ![restrictcreation](https://user-images.githubusercontent.com/837032/47265437-80bfcc80-d530-11e8-8e86-d469e2fb7ba7.gif)
 
-Getting started:
+## Getting started:
 
 1. `composer require 'flowpack/restrictcreation'`
 2. Configure your dimensions in Settings.yaml, e.g. like this:
