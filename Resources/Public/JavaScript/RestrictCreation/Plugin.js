@@ -247,8 +247,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 (0, _neosUiExtensibility2.default)('Flowpack.RestrictCreation:RestrictCreation', {}, function (globalRegistry) {
     var sagasRegistry = globalRegistry.get('sagas');
 
+    var originalAddNodeSaga = sagasRegistry.get('neos-ui/CR/NodeOperations/addNode');
     sagasRegistry.set('neos-ui/CR/NodeOperations/addNode', {
-        saga: _sagas.addNode
+        saga: (0, _sagas.makeAddNode)(originalAddNodeSaga.nodeCreationWorkflow)
     });
 
     var reducersRegistry = globalRegistry.get('reducers');
@@ -733,7 +734,7 @@ module.exports = (0, _readFromConsumerApi2.default)('vendor')().reselect;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.addNode = addNode;
+exports.makeAddNode = makeAddNode;
 
 var _effects = __webpack_require__(19);
 
@@ -743,115 +744,116 @@ var _neosUiReduxStore = __webpack_require__(2);
 
 var _redux = __webpack_require__(3);
 
-var _neosUiSagas = __webpack_require__(20);
+function makeAddNode(nodeCreationWorkflow) {
+    var _marked = /*#__PURE__*/regeneratorRuntime.mark(addNode);
 
-var _marked = /*#__PURE__*/regeneratorRuntime.mark(addNode);
+    function addNode(_ref) {
+        var globalRegistry = _ref.globalRegistry;
+        var nodeTypesRegistry;
+        return regeneratorRuntime.wrap(function addNode$(_context2) {
+            while (1) {
+                switch (_context2.prev = _context2.next) {
+                    case 0:
+                        nodeTypesRegistry = globalRegistry.get('@neos-project/neos-ui-contentrepository');
+                        _context2.next = 3;
+                        return (0, _effects.takeLatest)(_neosUiReduxStore.actionTypes.CR.Nodes.COMMENCE_CREATION, /*#__PURE__*/regeneratorRuntime.mark(function _callee(action) {
+                            var _action$payload, referenceNodeContextPath, referenceNodeFusionPath, state, restrictCreationPreset, showRestrictCreationDialog, documentNodesOnly, getNodeByContextPathSelector, referenceNode, isDocument, context, waitForNextAction, nextAction;
 
-function addNode(_ref) {
-    var globalRegistry = _ref.globalRegistry;
-    var nodeTypesRegistry;
-    return regeneratorRuntime.wrap(function addNode$(_context2) {
-        while (1) {
-            switch (_context2.prev = _context2.next) {
-                case 0:
-                    nodeTypesRegistry = globalRegistry.get('@neos-project/neos-ui-contentrepository');
-                    _context2.next = 3;
-                    return (0, _effects.takeLatest)(_neosUiReduxStore.actionTypes.CR.Nodes.COMMENCE_CREATION, /*#__PURE__*/regeneratorRuntime.mark(function _callee(action) {
-                        var _action$payload, referenceNodeContextPath, referenceNodeFusionPath, state, restrictCreationPreset, showRestrictCreationDialog, documentNodesOnly, getNodeByContextPathSelector, referenceNode, isDocument, context, waitForNextAction, nextAction;
+                            return regeneratorRuntime.wrap(function _callee$(_context) {
+                                while (1) {
+                                    switch (_context.prev = _context.next) {
+                                        case 0:
+                                            _action$payload = action.payload, referenceNodeContextPath = _action$payload.referenceNodeContextPath, referenceNodeFusionPath = _action$payload.referenceNodeFusionPath;
+                                            _context.next = 3;
+                                            return (0, _effects.select)();
 
-                        return regeneratorRuntime.wrap(function _callee$(_context) {
-                            while (1) {
-                                switch (_context.prev = _context.next) {
-                                    case 0:
-                                        _action$payload = action.payload, referenceNodeContextPath = _action$payload.referenceNodeContextPath, referenceNodeFusionPath = _action$payload.referenceNodeFusionPath;
-                                        _context.next = 3;
-                                        return (0, _effects.select)();
+                                        case 3:
+                                            state = _context.sent;
+                                            restrictCreationPreset = _redux.selectors.restrictCreationSelector(state);
 
-                                    case 3:
-                                        state = _context.sent;
-                                        restrictCreationPreset = _redux.selectors.restrictCreationSelector(state);
+                                            // Show restrict creation dialog if mode is not null
 
-                                        // Show restrict creation dialog if mode is not null
+                                            showRestrictCreationDialog = Boolean((0, _plowJs.$get)('restrictCreation.mode', restrictCreationPreset));
+                                            documentNodesOnly = (0, _plowJs.$get)('restrictCreation.documentNodesOnly', restrictCreationPreset);
 
-                                        showRestrictCreationDialog = Boolean((0, _plowJs.$get)('restrictCreation.mode', restrictCreationPreset));
-                                        documentNodesOnly = (0, _plowJs.$get)('restrictCreation.documentNodesOnly', restrictCreationPreset);
+                                            if (!documentNodesOnly) {
+                                                _context.next = 14;
+                                                break;
+                                            }
 
-                                        if (!documentNodesOnly) {
-                                            _context.next = 14;
+                                            getNodeByContextPathSelector = _neosUiReduxStore.selectors.CR.Nodes.makeGetNodeByContextPathSelector(referenceNodeContextPath);
+                                            _context.next = 11;
+                                            return (0, _effects.select)(getNodeByContextPathSelector);
+
+                                        case 11:
+                                            referenceNode = _context.sent;
+                                            isDocument = nodeTypesRegistry.hasRole((0, _plowJs.$get)('nodeType', referenceNode), 'document');
+                                            // Skip the dialog if not document node
+
+                                            showRestrictCreationDialog = isDocument;
+
+                                        case 14:
+                                            context = {
+                                                nodeTypesRegistry: nodeTypesRegistry,
+                                                referenceNodeContextPath: referenceNodeContextPath,
+                                                referenceNodeFusionPath: referenceNodeFusionPath
+                                            };
+
+                                            if (!showRestrictCreationDialog) {
+                                                _context.next = 30;
+                                                break;
+                                            }
+
+                                            _context.next = 18;
+                                            return (0, _effects.put)(_redux.actions.openDialog());
+
+                                        case 18:
+                                            _context.next = 20;
+                                            return (0, _effects.race)([(0, _effects.take)(_redux.actionTypes.OPEN_DIALOG), (0, _effects.take)(_redux.actionTypes.CLOSE_DIALOG), (0, _effects.take)(_redux.actionTypes.CONTINUE_CREATION)]);
+
+                                        case 20:
+                                            waitForNextAction = _context.sent;
+                                            nextAction = Object.values(waitForNextAction)[0];
+
+                                            if (!(nextAction.type === _redux.actionTypes.CONTINUE_CREATION)) {
+                                                _context.next = 27;
+                                                break;
+                                            }
+
+                                            _context.next = 25;
+                                            return (0, _effects.call)(nodeCreationWorkflow, context);
+
+                                        case 25:
+                                            _context.next = 28;
                                             break;
-                                        }
 
-                                        getNodeByContextPathSelector = _neosUiReduxStore.selectors.CR.Nodes.makeGetNodeByContextPathSelector(referenceNodeContextPath);
-                                        _context.next = 11;
-                                        return (0, _effects.select)(getNodeByContextPathSelector);
+                                        case 27:
+                                            return _context.abrupt('return');
 
-                                    case 11:
-                                        referenceNode = _context.sent;
-                                        isDocument = nodeTypesRegistry.hasRole((0, _plowJs.$get)('nodeType', referenceNode), 'document');
-                                        // Skip the dialog if not document node
-
-                                        showRestrictCreationDialog = isDocument;
-
-                                    case 14:
-                                        context = {
-                                            nodeTypesRegistry: nodeTypesRegistry,
-                                            referenceNodeContextPath: referenceNodeContextPath,
-                                            referenceNodeFusionPath: referenceNodeFusionPath
-                                        };
-
-                                        if (!showRestrictCreationDialog) {
-                                            _context.next = 30;
+                                        case 28:
+                                            _context.next = 32;
                                             break;
-                                        }
 
-                                        _context.next = 18;
-                                        return (0, _effects.put)(_redux.actions.openDialog());
+                                        case 30:
+                                            _context.next = 32;
+                                            return (0, _effects.call)(nodeCreationWorkflow, context);
 
-                                    case 18:
-                                        _context.next = 20;
-                                        return (0, _effects.race)([(0, _effects.take)(_redux.actionTypes.OPEN_DIALOG), (0, _effects.take)(_redux.actionTypes.CLOSE_DIALOG), (0, _effects.take)(_redux.actionTypes.CONTINUE_CREATION)]);
-
-                                    case 20:
-                                        waitForNextAction = _context.sent;
-                                        nextAction = Object.values(waitForNextAction)[0];
-
-                                        if (!(nextAction.type === _redux.actionTypes.CONTINUE_CREATION)) {
-                                            _context.next = 27;
-                                            break;
-                                        }
-
-                                        _context.next = 25;
-                                        return (0, _effects.call)(_neosUiSagas.crNodeOperations.addNode.nodeCreationWorkflow, context);
-
-                                    case 25:
-                                        _context.next = 28;
-                                        break;
-
-                                    case 27:
-                                        return _context.abrupt('return');
-
-                                    case 28:
-                                        _context.next = 32;
-                                        break;
-
-                                    case 30:
-                                        _context.next = 32;
-                                        return (0, _effects.call)(_neosUiSagas.crNodeOperations.addNode.nodeCreationWorkflow, context);
-
-                                    case 32:
-                                    case 'end':
-                                        return _context.stop();
+                                        case 32:
+                                        case 'end':
+                                            return _context.stop();
+                                    }
                                 }
-                            }
-                        }, _callee, this);
-                    }));
+                            }, _callee, this);
+                        }));
 
-                case 3:
-                case 'end':
-                    return _context2.stop();
+                    case 3:
+                    case 'end':
+                        return _context2.stop();
+                }
             }
-        }
-    }, _marked, this);
+        }, _marked, this);
+    }
+    return addNode;
 }
 
 /***/ }),
@@ -870,21 +872,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 module.exports = (0, _readFromConsumerApi2.default)('vendor')().reduxSagaEffects;
 
 /***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _readFromConsumerApi = __webpack_require__(0);
-
-var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().NeosUiSagas;
-
-/***/ }),
+/* 20 */,
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
