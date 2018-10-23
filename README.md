@@ -1,7 +1,5 @@
 # Flowpack.RestrictCreation
 
-**WARNING: currently requires this PR to be merged: https://github.com/neos/neos-ui/pull/2191**
-
 Imagine the situation: you have a website with 'English (US)', 'English (UK)' and 'German' content dimensions present.
 
 Now you never want editors to create new nodes directly in 'English (UK)', without first creating them in 'English (US)' and almost never in 'German', but some really rare cases.
