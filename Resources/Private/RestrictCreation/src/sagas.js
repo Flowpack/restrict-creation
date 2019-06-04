@@ -8,7 +8,7 @@ export function makeAddNode(nodeCreationWorkflow) {
         const nodeTypesRegistry = globalRegistry.get('@neos-project/neos-ui-contentrepository');
     
         yield takeLatest(actionTypes.CR.Nodes.COMMENCE_CREATION, function* (action) {
-            const {referenceNodeContextPath, referenceNodeFusionPath} = action.payload;
+			const {referenceNodeContextPath, referenceNodeFusionPath, preferredMode, nodeType} = action.payload;
     
             const state = yield select();
             const restrictCreationPreset = localSelectors.restrictCreationSelector(state);
@@ -26,10 +26,12 @@ export function makeAddNode(nodeCreationWorkflow) {
             }
     
             const context = {
-                nodeTypesRegistry,
-                referenceNodeContextPath,
-                referenceNodeFusionPath
-            };
+				nodeTypesRegistry,
+				referenceNodeContextPath,
+				referenceNodeFusionPath,
+				preferredMode,
+				nodeType
+			};
             if (showRestrictCreationDialog) {
                 yield put(localActions.openDialog());
                 const waitForNextAction = yield race([

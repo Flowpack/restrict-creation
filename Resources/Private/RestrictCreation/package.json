@@ -11,5 +11,8 @@
     },
     "neos": {
         "buildTargetDirectory": "../../Public/JavaScript/RestrictCreation"
+    },
+    "dependencies": {
+        "lodash.reduce": "^4.6.0"
     }
 }

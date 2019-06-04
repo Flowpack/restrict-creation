@@ -131,9 +131,10 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@neos-project/build-essentials@1.3.4":
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/@neos-project/build-essentials/-/build-essentials-1.3.4.tgz#eb1b7780a419cbaaa97cb34273f63c17db7840a6"
+"@neos-project/build-essentials@1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@neos-project/build-essentials/-/build-essentials-1.4.1.tgz#3152cf5f0ea0507133a0d6d939ecd07bc7a75a2d"
+  integrity sha512-HqTSwon6trWuzBOEpwJlalXSdL69ubBR00nLJbpj0RGF0AVkT1aJ2bhG7YGWQMCw1CL1vOhzUKQHPQHCdTvbKQ==
   dependencies:
     "@ckeditor/ckeditor5-dev-utils" "^9.0"
     babel-core "^6.13.2"
@@ -144,6 +145,7 @@
     cross-env "^5.1.3"
     eslint "^5.3.0"
     extract-text-webpack-plugin "^3.0.2"
+    lodash.upperfirst "^4.3.0"
     postcss-css-variables "^0.9.0"
     postcss-hexrgba "^1.0.0"
     postcss-import "^11.0.0"
@@ -156,12 +158,13 @@
     webpack "^3.8.1"
     webpack-livereload-plugin "^1.0.0"
 
-"@neos-project/neos-ui-extensibility@*":
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/@neos-project/neos-ui-extensibility/-/neos-ui-extensibility-1.3.4.tgz#b27325592fa7668f3cb1bc1095c010ff5a4e90bd"
+"@neos-project/neos-ui-extensibility@^1.4.0":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@neos-project/neos-ui-extensibility/-/neos-ui-extensibility-1.4.1.tgz#1a4548e54ccb402ff88fef312d65a01839eab8da"
+  integrity sha512-qFsQDMpZd8Ruf7XUq9QkfGBKzYejPVpUhJ1IlXMTwxP3B6ODieOm2bblbSes2F5qiKk+5O27p/s6ChTCDMX4sw==
   dependencies:
-    "@neos-project/build-essentials" "1.3.4"
-    "@neos-project/positional-array-sorter" "1.3.4"
+    "@neos-project/build-essentials" "1.4.1"
+    "@neos-project/positional-array-sorter" "1.4.1"
     babel-core "^6.13.2"
     babel-eslint "^7.1.1"
     babel-loader "^7.1.2"
@@ -179,9 +182,10 @@
     react-dev-utils "^0.5.0"
     style-loader "^0.21.0"
 
-"@neos-project/positional-array-sorter@1.3.4":
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/@neos-project/positional-array-sorter/-/positional-array-sorter-1.3.4.tgz#38c58db6ab98b844a0664f2601655cb7f00ae118"
+"@neos-project/positional-array-sorter@1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@neos-project/positional-array-sorter/-/positional-array-sorter-1.4.1.tgz#8352ed0e6b9b8a7d76ef8a662af388866f1dccb2"
+  integrity sha512-lx8I1QW5vC4NGc4dx0BLvaMm50fto4vcfScubtAFNRUM1MfXzMulDUYxFDEdea/rkAj3iouNUlwQild+4THHfg==
 
 "@nodelib/fs.stat@^1.0.1":
   version "1.1.2"
@@ -3389,6 +3393,11 @@ lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
 
+lodash.reduce@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/lodash.reduce/-/lodash.reduce-4.6.0.tgz#f1ab6b839299ad48f784abbf476596f03b914d3b"
+  integrity sha1-8atrg5KZrUj3hKu/R2WW8DuRTTs=
+
 lodash.some@^4.5.1:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.some/-/lodash.some-4.6.0.tgz#1bb9f314ef6b8baded13b549169b2a945eb68e4d"
@@ -3409,6 +3418,11 @@ lodash.templatesettings@^4.0.0:
 lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
+
+lodash.upperfirst@^4.3.0:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/lodash.upperfirst/-/lodash.upperfirst-4.3.1.tgz#1365edf431480481ef0d1c68957a5ed99d49f7ce"
+  integrity sha1-E2Xt9DFIBIHvDRxolXpe2Z1J984=
 
 lodash@^4.17.10, lodash@^4.17.4, lodash@^4.17.5:
   version "4.17.11"

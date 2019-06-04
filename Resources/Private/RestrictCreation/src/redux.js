@@ -1,5 +1,6 @@
 import {createAction} from 'redux-actions';
 import {handleActions} from '@neos-project/utils-redux';
+import reduce from 'lodash.reduce';
 import {$get, $set} from 'plow-js';
 import {createSelector} from 'reselect';
 import {selectors as foreignSelectors, actionTypes as foreignActionTypes} from '@neos-project/neos-ui-redux-store';
@@ -11,24 +12,21 @@ const restrictCreationSelector = createSelector(
         foreignSelectors.CR.ContentDimensions.activePresets
     ],
     activePresets => {
-        return activePresets.reduce(
-            (reduction, dimensionConfig, dimensionName) => {
-                const restrictCreationConfig = $set(
-                    'dimensionName',
-                    dimensionName,
-                    dimensionConfig
-                );
-                const restrictCreationMode = $get('restrictCreation.mode', dimensionConfig);
-                if ($get('restrictCreation.mode', reduction) === 'disallow') {
-                    return reduction;
-                }
-                if (restrictCreationMode === 'disallow' || restrictCreationMode === 'warn') {
-                    return restrictCreationConfig;
-                }
-                return reduction;
-            },
-            null
-        );
+        return reduce(activePresets, (reduction, dimensionConfig, dimensionName) => {
+			const restrictCreationConfig = $set(
+				'dimensionName',
+				dimensionName,
+				dimensionConfig
+			);
+			const restrictCreationMode = $get('restrictCreation.mode', dimensionConfig);
+			if ($get('restrictCreation.mode', reduction) === 'disallow') {
+				return reduction;
+			}
+			if (restrictCreationMode === 'disallow' || restrictCreationMode === 'warn') {
+				return restrictCreationConfig;
+			}
+			return reduction;
+		}, null);
     }
 );
 
