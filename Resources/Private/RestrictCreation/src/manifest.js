@@ -8,7 +8,7 @@ manifest('Flowpack.RestrictCreation:RestrictCreation', {}, globalRegistry => {
 
     const originalAddNodeSaga = sagasRegistry.get('neos-ui/CR/NodeOperations/addNode');
     sagasRegistry.set('neos-ui/CR/NodeOperations/addNode', {
-        saga: makeAddNode(originalAddNodeSaga.nodeCreationWorkflow)
+        saga: makeAddNode(originalAddNodeSaga.saga.nodeCreationWorkflow)
     });
 
     const reducersRegistry = globalRegistry.get('reducers');
