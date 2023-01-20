@@ -7,12 +7,14 @@
         "watch": "neos-react-scripts watch"
     },
     "devDependencies": {
-        "@neos-project/neos-ui-extensibility": "^1.4.0"
+      "@neos-project/neos-ui-extensibility": "^8.0.0",
+      "@neos-project/build-essentials": "^8.0.0"
     },
     "neos": {
         "buildTargetDirectory": "../../Public/JavaScript/RestrictCreation"
     },
     "dependencies": {
-        "lodash.reduce": "^4.6.0"
+        "lodash.reduce": "^4.6.0",
+        "regenerator-runtime": "^0.13.11"
     }
 }
