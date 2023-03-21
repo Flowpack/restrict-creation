@@ -1,6 +1,7 @@
 import manifest from '@neos-project/neos-ui-extensibility';
 import RestrictCreationDialog from './RestrictCreationDialog';
 import {reducer} from './redux';
+import "regenerator-runtime/runtime";
 import {makeAddNode} from './sagas';
 
 manifest('Flowpack.RestrictCreation:RestrictCreation', {}, globalRegistry => {
