@@ -10,10 +10,16 @@ This package provides an option to enforce these kind of constraints:
 
 ## Getting started:
 
-1. `composer require 'flowpack/restrictcreation'`
-2. Configure your dimensions in Settings.yaml, e.g. like this:
+### Installation
 
+```bash
+composer require 'flowpack/restrictcreation
 ```
+### Configuration
+
+Configure your dimensions in `Settings.yaml`, e.g. like this:
+
+```yaml
 Neos:
   ContentRepository:
     contentDimensions:
