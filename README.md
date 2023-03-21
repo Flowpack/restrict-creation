@@ -13,7 +13,7 @@ This package provides an option to enforce these kind of constraints:
 ### Installation
 
 ```bash
-composer require 'flowpack/restrictcreation
+composer require flowpack/restrictcreation
 ```
 ### Configuration
 
